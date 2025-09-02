@@ -1,0 +1,65 @@
+﻿@page "/resumir"
+@rendermode InteractiveServer
+@inject Services.ITextAnalyticsService SummarizerService
+
+<h3>Resumir trechos do documento</h3>
+
+<div class="mb-3">
+    <textarea class="form-control" rows="15" @bind="InputText"></textarea>
+</div>
+
+<button class="btn btn-primary" @onclick="Summarize" disabled="@IsLoading">
+    @if (IsLoading)
+    {
+        <span>Carregando...</span>
+    }
+    else
+    {
+        <span>Resumir</span>
+    }
+</button>
+
+@if (IsLoading)
+{
+    <p>Processando texto, por favor aguarde...</p>
+}
+
+@if (SummarizedText.Any())
+{
+    <h4 class="mt-3">Resumo</h4>
+    <ul>
+        @foreach (var sentence in SummarizedText)
+        {
+            <li>@sentence</li>
+        }
+    </ul>
+}
+
+@code {
+    private string InputText = string.Empty;
+    private List<string> SummarizedText = new();
+    private bool IsLoading = false;
+
+    private async Task Summarize()
+    {
+        if (string.IsNullOrWhiteSpace(InputText))
+        {
+            SummarizedText = new() { "Digite um texto para resumir." };
+            return;
+        }
+
+        try
+        {
+            IsLoading = true;       // ativa loading
+            SummarizedText = await SummarizerService.AbstractSummarizeAsync(InputText);
+        }
+        catch (Exception ex)
+        {
+            SummarizedText = new() { $"Erro: {ex.Message}" };
+        }
+        finally
+        {
+            IsLoading = false;      // desativa loading
+        }
+    }
+}
