@@ -1,5 +1,5 @@
-using SummaryLanguage.Components;
-using SummaryLanguage.Services;
+using Fundamentos.Language.Summary.Components;
+using Fundamentos.Language.Summary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

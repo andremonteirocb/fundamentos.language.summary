@@ -1,9 +1,8 @@
 ﻿
 using Azure;
 using Azure.AI.TextAnalytics;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace SummaryLanguage.Services
+namespace Fundamentos.Language.Summary.Services
 {
     public class TextAnalyticsService : ITextAnalyticsService
     {

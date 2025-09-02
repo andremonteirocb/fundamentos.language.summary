@@ -1,4 +1,4 @@
-﻿namespace SummaryLanguage.Services
+﻿namespace Fundamentos.Language.Summary.Services
 {
     public interface ITextAnalyticsService
     {
